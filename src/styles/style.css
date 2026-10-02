@@ -2,6 +2,7 @@
   font-family: Arial, Helvetica, sans-serif;
   color: #17212b;
   background-color: #f4f7fb;
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
@@ -14,6 +15,9 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
+  background:
+    radial-gradient(circle at top left, rgb(36 87 197 / 10%), transparent 32rem),
+    #f4f7fb;
 }
 
 body.modal-open {
@@ -62,9 +66,11 @@ button {
   background-color: #2457c5;
   cursor: pointer;
   transition:
+    border-color 150ms ease,
     background-color 150ms ease,
     color 150ms ease,
     transform 150ms ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .button:hover {
@@ -87,7 +93,7 @@ button {
   align-content: start;
   justify-items: center;
   gap: 24px;
-  padding: 24px;
+  padding: clamp(16px, 4vw, 32px) 24px 32px;
   text-align: center;
 }
 
@@ -136,6 +142,7 @@ button {
   border-radius: 16px;
   background: none;
   perspective: 800px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .card:not(:disabled) {
@@ -218,6 +225,7 @@ button {
 .card.is-matched .card__face--front {
   border-color: #3a9d5d;
   box-shadow: 0 8px 20px rgb(58 157 93 / 24%);
+  animation: match-found 350ms ease;
 }
 
 .board.is-complete .card__face--front {
@@ -226,11 +234,12 @@ button {
 
 .modal {
   width: min(100% - 32px, 480px);
+  max-height: calc(100dvh - 32px);
   max-width: none;
   padding: 0;
   border: 0;
   border-radius: 18px;
-  overflow: visible;
+  overflow: hidden;
   background: transparent;
 }
 
@@ -240,8 +249,11 @@ button {
 }
 
 .modal__panel {
+  max-height: calc(100dvh - 32px);
   padding: clamp(24px, 6vw, 40px);
   border-radius: 18px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background-color: #ffffff;
   box-shadow: 0 24px 70px rgb(0 0 0 / 28%);
 }
@@ -298,6 +310,7 @@ button {
   padding: 10px 8px;
   border-bottom: 1px solid #d9e2ec;
   text-align: center;
+  white-space: nowrap;
 }
 
 .leaderboard th {
@@ -308,6 +321,12 @@ button {
 
 .leaderboard tbody tr:last-child td {
   border-bottom: 0;
+}
+
+@keyframes match-found {
+  50% {
+    transform: scale(1.04);
+  }
 }
 
 @media (max-width: 480px) {
@@ -325,22 +344,71 @@ button {
   .header {
     align-items: stretch;
     flex-direction: column;
+    gap: 16px;
+    padding: 20px 0 16px;
   }
 
   .header__controls {
-    justify-content: stretch;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 
-  .button {
-    flex: 1;
+  .header .button {
+    width: 100%;
+    padding-inline: 10px;
   }
 
-  .stats {
-    flex-direction: column;
+  .game {
+    gap: 18px;
+    padding: 16px 16px 24px;
   }
 
   .board,
   .stats {
     width: min(100%, 440px);
+  }
+
+  .stats {
+    gap: 8px;
+  }
+
+  .stats__item {
+    padding: 12px 8px;
+  }
+
+  .card,
+  .card__face {
+    border-radius: 12px;
+  }
+
+  .card__face--front {
+    gap: 4px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .card__face--front {
+    padding: 6px;
+  }
+
+  .card__image {
+    width: 62%;
+  }
+
+  .card__name {
+    font-size: 0.625rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
