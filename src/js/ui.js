@@ -161,3 +161,70 @@ export const createVictoryContent = ({
 
   return content;
 };
+
+const createTableCell = (tagName, text) => {
+  const cell = document.createElement(tagName);
+  cell.textContent = text;
+
+  return cell;
+};
+
+export const createLeaderboardContent = ({ onClose, results, titleId }) => {
+  const content = document.createElement('section');
+  content.classList.add('modal__content');
+
+  const title = document.createElement('h2');
+  title.classList.add('modal__title');
+  title.id = titleId;
+  title.textContent = 'Таблица лидеров';
+  content.append(title);
+
+  if (results.length === 0) {
+    const emptyMessage = document.createElement('p');
+    emptyMessage.classList.add('modal__message');
+    emptyMessage.textContent = 'Пока нет результатов';
+    content.append(emptyMessage);
+  } else {
+    const table = document.createElement('table');
+    table.classList.add('leaderboard');
+
+    const tableHead = document.createElement('thead');
+    const headRow = document.createElement('tr');
+    headRow.append(
+      createTableCell('th', 'Место'),
+      createTableCell('th', 'Ходы'),
+      createTableCell('th', 'Дата'),
+    );
+    tableHead.append(headRow);
+
+    const tableBody = document.createElement('tbody');
+    results.forEach(({ date, moves }, index) => {
+      const row = document.createElement('tr');
+      row.append(
+        createTableCell('td', String(index + 1)),
+        createTableCell('td', String(moves)),
+        createTableCell('td', date),
+      );
+      tableBody.append(row);
+    });
+
+    table.append(tableHead, tableBody);
+    content.append(table);
+  }
+
+  const actions = document.createElement('div');
+  actions.classList.add('modal__actions');
+
+  const closeButton = createButton(
+    'Закрыть',
+    'close-modal',
+    'Закрыть таблицу лидеров',
+  );
+  closeButton.classList.add('button--secondary');
+  closeButton.addEventListener('click', onClose);
+
+  actions.append(closeButton);
+  content.append(actions);
+
+  return content;
+};

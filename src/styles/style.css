@@ -286,6 +286,30 @@ button {
   opacity: 0.65;
 }
 
+.leaderboard {
+  width: 100%;
+  margin-top: 24px;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.leaderboard th,
+.leaderboard td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #d9e2ec;
+  text-align: center;
+}
+
+.leaderboard th {
+  color: #52606d;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+}
+
+.leaderboard tbody tr:last-child td {
+  border-bottom: 0;
+}
+
 @media (max-width: 480px) {
   .modal__actions {
     flex-direction: column;

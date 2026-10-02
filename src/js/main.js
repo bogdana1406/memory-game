@@ -1,9 +1,11 @@
 import { createDeck } from './deck.js';
 import { initializeGame } from './game.js';
 import { createModal } from './modal.js';
+import { getResults, saveResult } from './storage.js';
 import {
   createBoard,
   createHeader,
+  createLeaderboardContent,
   createStats,
   createVictoryContent,
 } from './ui.js';
@@ -25,6 +27,7 @@ const movesOutput = stats.querySelector('[data-stat="moves"]');
 const pairsOutput = stats.querySelector('[data-stat="pairs"]');
 const header = createHeader();
 const headerNewGameButton = header.querySelector('[data-action="new-game"]');
+const leaderboardButton = header.querySelector('[data-action="leaderboard"]');
 
 game.append(description, stats);
 app.append(header, game);
@@ -35,6 +38,7 @@ let board = null;
 let gameController = null;
 
 const handleWin = ({ moves, movesLabel: resultMovesLabel }) => {
+  saveResult(moves);
   description.textContent = `Все пары найдены за ${moves} ${resultMovesLabel}!`;
 
   const victoryContent = createVictoryContent({
@@ -75,5 +79,16 @@ function startNewGame() {
   });
 }
 
+const openLeaderboard = () => {
+  const leaderboardContent = createLeaderboardContent({
+    onClose: modal.close,
+    results: getResults(),
+    titleId: modal.titleId,
+  });
+
+  modal.open(leaderboardContent);
+};
+
 headerNewGameButton.addEventListener('click', startNewGame);
+leaderboardButton.addEventListener('click', openLeaderboard);
 startNewGame();
