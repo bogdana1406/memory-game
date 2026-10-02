@@ -118,3 +118,46 @@ export const createBoard = (deck) => {
 
   return board;
 };
+
+export const createVictoryContent = ({
+  moves,
+  movesLabel,
+  onClose,
+  onNewGame,
+  titleId,
+}) => {
+  const content = document.createElement('section');
+  content.classList.add('modal__content');
+
+  const title = document.createElement('h2');
+  title.classList.add('modal__title');
+  title.id = titleId;
+  title.textContent = 'Победа!';
+
+  const message = document.createElement('p');
+  message.classList.add('modal__message');
+  message.textContent = `Вы нашли все пары за ${moves} ${movesLabel}.`;
+
+  const actions = document.createElement('div');
+  actions.classList.add('modal__actions');
+
+  const newGameButton = createButton(
+    'Новая игра',
+    'new-game',
+    'Начать новую игру',
+  );
+  newGameButton.addEventListener('click', onNewGame);
+
+  const closeButton = createButton(
+    'Закрыть',
+    'close-modal',
+    'Закрыть окно победы',
+  );
+  closeButton.classList.add('button--secondary');
+  closeButton.addEventListener('click', onClose);
+
+  actions.append(newGameButton, closeButton);
+  content.append(title, message, actions);
+
+  return content;
+};

@@ -1,6 +1,12 @@
 import { createDeck } from './deck.js';
 import { initializeGame } from './game.js';
-import { createBoard, createHeader, createStats } from './ui.js';
+import { createModal } from './modal.js';
+import {
+  createBoard,
+  createHeader,
+  createStats,
+  createVictoryContent,
+} from './ui.js';
 
 const app = document.createElement('div');
 app.classList.add('app');
@@ -13,25 +19,61 @@ description.classList.add('game__description');
 description.textContent = 'Найдите все пары карточек';
 description.setAttribute('aria-live', 'polite');
 
-const deck = createDeck();
-const board = createBoard(deck);
 const stats = createStats();
 const movesLabel = stats.querySelector('[data-stat-label="moves"]');
 const movesOutput = stats.querySelector('[data-stat="moves"]');
 const pairsOutput = stats.querySelector('[data-stat="pairs"]');
+const header = createHeader();
+const headerNewGameButton = header.querySelector('[data-action="new-game"]');
 
-game.append(description, stats, board);
-app.append(createHeader(), game);
+game.append(description, stats);
+app.append(header, game);
 document.body.append(app);
+
+const modal = createModal();
+let board = null;
+let gameController = null;
 
 const handleWin = ({ moves, movesLabel: resultMovesLabel }) => {
   description.textContent = `Все пары найдены за ${moves} ${resultMovesLabel}!`;
+
+  const victoryContent = createVictoryContent({
+    moves,
+    movesLabel: resultMovesLabel,
+    onClose: modal.close,
+    onNewGame: startNewGame,
+    titleId: modal.titleId,
+  });
+
+  modal.open(victoryContent);
 };
 
-initializeGame({
-  board,
-  movesLabel,
-  movesOutput,
-  onWin: handleWin,
-  pairsOutput,
-});
+function startNewGame() {
+  gameController?.destroy();
+  modal.close();
+
+  const nextBoard = createBoard(createDeck());
+
+  if (board) {
+    board.replaceWith(nextBoard);
+  } else {
+    game.append(nextBoard);
+  }
+
+  board = nextBoard;
+  description.textContent = 'Найдите все пары карточек';
+  movesOutput.textContent = '0';
+  movesLabel.textContent = 'ходов';
+  pairsOutput.textContent = '0';
+
+  gameController = initializeGame({
+    board,
+    movesLabel,
+    movesOutput,
+    onWin: handleWin,
+    pairsOutput,
+  });
+}
+
+headerNewGameButton.addEventListener('click', startNewGame);
+startNewGame();

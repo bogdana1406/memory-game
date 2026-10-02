@@ -16,6 +16,10 @@ body {
   margin: 0;
 }
 
+body.modal-open {
+  overflow: hidden;
+}
+
 button {
   font: inherit;
 }
@@ -218,6 +222,74 @@ button {
 
 .board.is-complete .card__face--front {
   box-shadow: 0 8px 22px rgb(58 157 93 / 30%);
+}
+
+.modal {
+  width: min(100% - 32px, 480px);
+  max-width: none;
+  padding: 0;
+  border: 0;
+  border-radius: 18px;
+  overflow: visible;
+  background: transparent;
+}
+
+.modal::backdrop {
+  background-color: rgb(23 33 43 / 68%);
+  backdrop-filter: blur(3px);
+}
+
+.modal__panel {
+  padding: clamp(24px, 6vw, 40px);
+  border-radius: 18px;
+  background-color: #ffffff;
+  box-shadow: 0 24px 70px rgb(0 0 0 / 28%);
+}
+
+.modal__content {
+  text-align: center;
+}
+
+.modal__title {
+  margin: 0;
+  font-size: clamp(2rem, 8vw, 3rem);
+}
+
+.modal__message {
+  margin: 16px 0 0;
+  color: #52606d;
+  font-size: 1.125rem;
+}
+
+.modal__actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.button--secondary {
+  color: #2457c5;
+  background-color: #ffffff;
+}
+
+.button--secondary:hover {
+  color: #ffffff;
+  background-color: #2457c5;
+}
+
+.modal .button:disabled {
+  border-color: #9aa5b1;
+  color: #ffffff;
+  background-color: #9aa5b1;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+@media (max-width: 480px) {
+  .modal__actions {
+    flex-direction: column;
+  }
 }
 
 .card:focus-visible {

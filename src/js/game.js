@@ -55,6 +55,7 @@ export const initializeGame = ({
 
   let firstCard = null;
   let secondCard = null;
+  let concealTimerId = null;
   let isBoardLocked = false;
   let isGameFinished = false;
   let moves = 0;
@@ -88,9 +89,10 @@ export const initializeGame = ({
 
     isBoardLocked = true;
 
-    setTimeout(() => {
+    concealTimerId = setTimeout(() => {
       concealCard(firstCard);
       concealCard(secondCard);
+      concealTimerId = null;
       resetSelection();
     }, 1000);
   };
@@ -127,4 +129,14 @@ export const initializeGame = ({
   });
 
   board.addEventListener('click', handleCardClick);
+
+  return {
+    destroy: () => {
+      if (concealTimerId !== null) {
+        clearTimeout(concealTimerId);
+      }
+
+      board.removeEventListener('click', handleCardClick);
+    },
+  };
 };
