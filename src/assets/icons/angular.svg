@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Angular</title>
+  <rect width="128" height="128" rx="24" fill="#fff1f2"/>
+  <path d="M64 15 108 31 101 91 64 113 27 91 20 31Z" fill="#dd0031"/>
+  <path d="m64 35-24 56h12l5-13h14l5 13h12L64 35Zm0 17 4 15h-8Z" fill="#ffffff"/>
+</svg>
