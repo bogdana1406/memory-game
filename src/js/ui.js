@@ -23,12 +23,14 @@ const createStat = (value, text, name) => {
   return stat;
 };
 
-const createCard = (index) => {
+const createCard = ({ cardId, technologyId, name, icon }, index) => {
   const card = document.createElement('button');
   card.classList.add('card');
   card.type = 'button';
   card.disabled = true;
+  card.dataset.cardId = cardId;
   card.dataset.cardIndex = index;
+  card.dataset.technologyId = technologyId;
   card.setAttribute('aria-label', `Закрытая карточка ${index + 1}`);
 
   const cardInner = document.createElement('span');
@@ -43,6 +45,17 @@ const createCard = (index) => {
   cardFront.classList.add('card__face', 'card__face--front');
   cardFront.setAttribute('aria-hidden', 'true');
 
+  const cardImage = document.createElement('img');
+  cardImage.classList.add('card__image');
+  cardImage.src = icon;
+  cardImage.alt = name;
+  cardImage.draggable = false;
+
+  const cardName = document.createElement('span');
+  cardName.classList.add('card__name');
+  cardName.textContent = name;
+
+  cardFront.append(cardImage, cardName);
   cardInner.append(cardBack, cardFront);
   card.append(cardInner);
 
@@ -90,12 +103,12 @@ export const createStats = () => {
   return stats;
 };
 
-export const createBoard = () => {
+export const createBoard = (deck) => {
   const board = document.createElement('section');
   board.classList.add('board');
   board.setAttribute('aria-label', 'Игровое поле');
 
-  const cards = Array.from({ length: 16 }, (_, index) => createCard(index));
+  const cards = deck.map((card, index) => createCard(card, index));
   board.append(...cards);
 
   return board;

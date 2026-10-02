@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Vue</title>
+  <rect width="128" height="128" rx="24" fill="#f4fffb"/>
+  <path d="M15 28h23l26 45 26-45h23L64 112Z" fill="#42b883"/>
+  <path d="M38 28h16l10 17 10-17h16L64 73Z" fill="#35495e"/>
+</svg>

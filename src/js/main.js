@@ -1,3 +1,4 @@
+import { createDeck } from './deck.js';
 import { createBoard, createHeader, createStats } from './ui.js';
 
 const app = document.createElement('div');
@@ -10,6 +11,8 @@ const description = document.createElement('p');
 description.classList.add('game__description');
 description.textContent = 'Найдите все пары карточек';
 
-game.append(description, createStats(), createBoard());
+const deck = createDeck();
+
+game.append(description, createStats(), createBoard(deck));
 app.append(createHeader(), game);
 document.body.append(app);

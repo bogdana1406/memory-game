@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Next.js</title>
+  <rect width="128" height="128" rx="24" fill="#f7f7f7"/>
+  <circle cx="64" cy="64" r="47" fill="#111111"/>
+  <path d="M42 87V41h7l37 46V41" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
