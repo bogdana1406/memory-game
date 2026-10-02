@@ -134,6 +134,18 @@ button {
   perspective: 800px;
 }
 
+.card:not(:disabled) {
+  cursor: pointer;
+}
+
+.card:not(:disabled, .is-flipped):hover .card__inner {
+  transform: translateY(-4px);
+}
+
+.card:not(:disabled, .is-flipped):active .card__inner {
+  transform: translateY(-1px);
+}
+
 .card__inner {
   position: relative;
   display: grid;
@@ -197,6 +209,15 @@ button {
 
 .card.is-flipped .card__inner {
   transform: rotateY(180deg);
+}
+
+.card.is-matched .card__face--front {
+  border-color: #3a9d5d;
+  box-shadow: 0 8px 20px rgb(58 157 93 / 24%);
+}
+
+.board.is-complete .card__face--front {
+  box-shadow: 0 8px 22px rgb(58 157 93 / 30%);
 }
 
 .card:focus-visible {

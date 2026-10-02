@@ -18,7 +18,11 @@ const createStat = (value, text, name) => {
   output.dataset.stat = name;
   output.textContent = value;
 
-  stat.append(output, document.createTextNode(` ${text}`));
+  const label = document.createElement('span');
+  label.dataset.statLabel = name;
+  label.textContent = text;
+
+  stat.append(output, document.createTextNode(' '), label);
 
   return stat;
 };
@@ -30,6 +34,7 @@ const createCard = ({ cardId, technologyId, name, icon }, index) => {
   card.disabled = true;
   card.dataset.cardId = cardId;
   card.dataset.cardIndex = index;
+  card.dataset.cardName = name;
   card.dataset.technologyId = technologyId;
   card.setAttribute('aria-label', `Закрытая карточка ${index + 1}`);
 
